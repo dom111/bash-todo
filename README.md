@@ -33,3 +33,7 @@ From then on you should see your list appearing in the top right-hand corner of 
     ~/bin/TODO.sh -d 2   # deleted item 2 from your list
 
 This script assumes you want to work on `~/TODO`, but you can change the path to the file in `TODO.sh` itself, along with a few other settings.
+
+## Screenshot
+
+![You can change the colours, don't worry!](http://i.imgur.com/PJYPfjd.png)
