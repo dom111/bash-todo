@@ -120,18 +120,18 @@ $longest_item = length > $longest_item ? length : $longest_item for @items;
 my $number_of_items = @items;
 my $left_column_length = length($number_of_items) + 1;
 my $max_right_column_width = $max_width - ($left_column_length + 1);
-my $max_right_column_content_width = $max_right_column_width - (length($line_prefix) + length($line_suffix));
 my $longest_line_length = $longest_item + length($line_prefix) + length($line_suffix);
 my $actual_line_length = ($longest_line_length, $max_right_column_width)[$longest_line_length > $max_right_column_width];
+my $max_right_column_content_width = $actual_line_length - (length($line_prefix) + length($line_suffix));
 my $full_width = $left_column_length + 1 + $actual_line_length;
 my $start_column = $ENV{cols} - $full_width + 1;
 my ($row_counter, $item_number, $adjusted_content_width);
 
 ($header, $footer) = map {
     join($/, map {
-        s/(.)\{fill\}/$1 x($max_width - (length($`) + length($')))/e;
-        s!\{center\}(.+)\{/center\}!$"x(int($max_width / 2) - length($`) - int(length($1) / 2)).$1!e;
-        s!\{right\}(.+)\{/right\}!$"x($max_width-length($`) - length($1)).$1!e;
+        s/(.)\{fill\}/$1 x($full_width - (length($`) + length($')))/e;
+        s!\{center\}(.+)\{/center\}!$"x(int($full_width / 2) - length($`) - int(length($1) / 2)).$1!e;
+        s!\{right\}(.+)\{/right\}!$"x($full_width - length($`) - length($1)).$1!e;
         $_
     } split/\n/, $_);
 } $header, $footer;
