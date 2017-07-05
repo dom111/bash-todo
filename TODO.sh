@@ -137,7 +137,7 @@ $footer");
 
 if (@items > $max_height) {
     my $missing = (@items - ($max_height - 1));
-    @items = (@items[0..($max_height - 2)], "  $missing more items");
+    @items = (@items[0..($max_height - 2)], "  $missing more items...");
 }
 
 map {
@@ -145,12 +145,14 @@ map {
     print "\x1b[$row_counter;${start_column}f$_"
 }
 map {
-    "$all_prefix$_$all_suffix"=~s/\\x1b/\x1b/gr
+    my $output = $all_prefix.$_.$all_suffix;
+    $output =~ s/\\x1b/\x1b/g;
+    $output
 }
-split(/\n/,$header),(map{
+split(/\n/, $header), (map {
     $adjusted_content_width = $max_right_column_content_width;
 
-    map{
+    map {
         $adjusted_content_width += length
     } /\\x1b\[[^m]+m/g;
 
