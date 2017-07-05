@@ -1,4 +1,4 @@
-#!/bin/bash
+q=; #=;q%
 
 # customisation
 export max_width=".5";     # what fraction of the width of the screen can be used
@@ -18,6 +18,8 @@ text_footer="+-{fill}+";
 text_line_prefix="| ";
 text_line_suffix=" |";
 
+file="$HOME/TODO";
+
 # header and footer strings can have the following formatters applied:
 #   x{fill}                 - fills the line with 'x' excepting any chars before or after
 #   {center}text{center}    - prints 'text' in the center of the line
@@ -26,11 +28,6 @@ text_line_suffix=" |";
 # main
 export cols=$(tput cols);
 export rows=$(tput lines);
-
-file=~/TODO;
-
-perl_start=$(grep -n '#!perl' $0 | tail -1 | awk -F: '{print$1}');
-format_script=$(awk -F\n "{if(NR>=$perl_start){print}}" "$0");
 
 function usage {
     echo "Usage:
@@ -50,7 +47,7 @@ function _format {
     export header=$6;
     export footer=$7;
 
-    perl -e "$format_script" < $file;
+    perl "$0" < "$file";
 }
 
 if [[ "$@" = *"-h"* || "$@" = *"--h"* ]]; then
@@ -98,9 +95,8 @@ fi
 
 tput rc;
 
-exit 0;
-
-#!perl
+<<"PERL"
+%;
 use strict;
 
 my @items = <>;
@@ -164,3 +160,5 @@ split(/\n/,$header),(map{
 map {
     (/\bdone\b/&&$done_prefix).((length > $max_right_column_content_width) ? substr($_, 0, $max_right_column_content_width - 3).'...' : $_)
 } @items), split(/\n/, $footer);
+
+"PERL"
