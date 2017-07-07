@@ -3,8 +3,8 @@ q=; #=;q%
 # customisation
 export max_width=".5";     # what fraction of the width of the screen can be used
 export max_height="1";     # what fraction of the height of the screen can be used
-export style="44;97";      # specify colours for the main window
-export done_style="90";    # specify alternative colors for items that are done
+export style="44;97";      # specify colours for the main windows
+export done_style="90";    # specify alternate colors for items that are done
 
 # colour only settings
 colour_header=" {fill}";
@@ -95,7 +95,7 @@ fi
 
 tput rc;
 
-<<"PERL"
+exit 0;
 %;
 use strict;
 
@@ -163,4 +163,3 @@ map {
     (/\bdone\b/&&$done_prefix).((length > $max_right_column_content_width) ? substr($_, 0, $max_right_column_content_width - 3).'...' : $_)
 } @items), split(/\n/, $footer);
 
-"PERL"
